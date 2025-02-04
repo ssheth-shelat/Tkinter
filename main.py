@@ -2,7 +2,6 @@
 
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
-#test
 
 import tkinter
 from tkinter import ttk
@@ -26,15 +25,29 @@ last_name_entry = tkinter.Entry(user_info_frame)
 first_name_entry.grid(row=1, column=0)
 last_name_entry.grid(row=1, column=1)
 
-title_label = tkinter.Label(user_info_frame, text = "Title")
+title_label = tkinter.Label(user_info_frame, text = "Sector")
 title_combobox = ttk.Combobox(user_info_frame, values=["Technology", "Financial Services", "Consumer Cyclical", "Healthcare", "Communication Services", "Industrials", "Consumer Defensive", "Energy", "Basic Materials", "Real Estate", "Utilities"])
-title_label.grid(row= 0, column=2)
-title_combobox.grid(row=1, column=2)
+title_label.grid(row= 4, column=0)
+title_combobox.grid(row=5, column=0)
 
 age_label = tkinter.Label(user_info_frame, text = "Age")
 age_spinbox = tkinter.Spinbox(user_info_frame, from_ = 18, to = 110)
 age_label.grid(row=2, column=0)
 age_spinbox.grid(row=3, column=0)
+
+for widget in user_info_frame.winfo_children():
+    widget.grid_configure(padx=10, pady=5)
+
+courses_frame = tkinter.LabelFrame(frame)
+courses_frame.grid(row = 1, column=0, sticky="news", pady=20, padx=20)
+
+registered_label = tkinter.Label(courses_frame, text="Registration Status")
+registered_check = tkinter.Checkbutton(courses_frame, text="Currently Registered")
+registered_label.grid(row = 0, column=0)
+registered_check.grid(row =1, column=0)
+
+numcourses_label = tkinter.Label(courses_frame, text="# Completed Courses")
+numcourses_spinbox = tkinter.Spinbox(courses_frame, from_=0, to='infinity')
 
 window.mainloop()
 
