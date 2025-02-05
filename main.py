@@ -48,6 +48,22 @@ registered_check.grid(row =1, column=0)
 
 numcourses_label = tkinter.Label(courses_frame, text="# Completed Courses")
 numcourses_spinbox = tkinter.Spinbox(courses_frame, from_=0, to='infinity')
+numcourses_label.grid(row = 0, column=1)
+numcourses_spinbox.grid(row = 1, column=1)
+
+numsemesters_label = tkinter.Label(courses_frame, text="# Semesters")
+numsemesters_spinbox = tkinter.Spinbox(courses_frame, from_=0, to='infinity')
+numsemesters_label.grid(row = 0, column=2)
+numsemesters_spinbox.grid(row = 1, column=2)
+
+for widget in user_info_frame.winfo_children():
+    widget.grid_configure(padx=10, pady=5)
+
+terms_frame = tkinter.LabelFrame(frame, text="Terms and Conditions")
+terms_frame.grid(row=2, column=0, sticky="news", padx=20, pady=20)
+
+terms_check = tkinter.Checkbutton(terms_frame, text="I accept the Terms and Conditions")
+terms_check.grid(row=0, column=0)
 
 window.mainloop()
 
