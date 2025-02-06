@@ -131,7 +131,7 @@ for widget in user_info_frame.winfo_children():
 terms_frame = tkinter.LabelFrame(frame, text="Terms and Conditions")
 terms_frame.grid(row=5, column=0, sticky="news", padx=20, pady=20)
 
-accept_var = tkinter.StringVar("Not Accepted")
+accept_var = tkinter.StringVar(value="Not Accepted")
 terms_check = tkinter.Checkbutton(terms_frame, text="I accept the Terms and Conditions", variable=accept_var, onvalue="Accepted", offvalue="Not Accepted")
 terms_check.grid(row=0, column=0)
 
