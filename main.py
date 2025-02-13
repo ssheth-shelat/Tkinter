@@ -3,22 +3,29 @@
 # Press Shift+F10 to execute it or replace it with your code.
 # Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
 
+
 import tkinter
 from tkinter import ttk
+from tkinter import messagebox
 window = tkinter.Tk()
 window.title("Data Entry Form")
 
 def enter_data():
-    first_name = first_name_entry.get()
-    last_name = last_name_entry.get()
-    age = age_spinbox.get()
-    career_point = career_combobox.get()
-    risk_tolerance = risk_combobox.get()
-    goal = goal_combobox.get()
-    time = time_combobox.get()
-    money_total = money_spinbox.get()
-    money_for_stock = shares_spinbox.get()
-    sector = sector_combobox.get()
+    accepted = accept_var.get()
+
+    if accepted == "Accepted":
+        first_name = first_name_entry.get()
+        last_name = last_name_entry.get()
+        age = age_spinbox.get()
+        career_point = career_combobox.get()
+        risk_tolerance = risk_combobox.get()
+        goal = goal_combobox.get()
+        time = time_combobox.get()
+        money_total = money_spinbox.get()
+        money_for_stock = shares_spinbox.get()
+        sector = sector_combobox.get()
+    else:
+        tkinter.messagebox.showwarning(title = "Error", message="You haven't accepted the terms and conditions")
 
 
 
