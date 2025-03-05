@@ -1,3 +1,5 @@
+'''
+
 import yfinance as yf
 import pandas as pd
 import time
@@ -39,8 +41,8 @@ time.sleep(5)  # Wait 5 seconds before making another request
 
 # Delay to prevent hitting rate limits
 time.sleep(5)  # Wait 5 seconds before making another request
-
 '''
+
 import yfinance as yf
 import pandas as pd
 import json
@@ -51,7 +53,7 @@ with open("user_preferences.json", "r") as f:
     user_prefs = json.load(f)
 
 # Load stock tickers from CSV
-tickers_df = pd.read_csv("stocks.csv")  # Ensure the file exists
+tickers_df = pd.read_csv("C:\Users\suri.shethshelat\Downloads\Yahoo Tickers - nyse_stocks.csv")  # Ensure the file exists
 tickers = tickers_df["Symbol"].tolist()
 
 # Filter logic based on user preferences
@@ -71,7 +73,7 @@ for ticker in tickers[:50]:  # Limit API calls for testing
 
         # Match user preferences
         score = 0
-        if user_prefs["preferred_sector"] in ["No Preference", sector]:
+        if user_prefs["sector"] in ["No Clue", sector]:  # Changed from "preferred_sector"
             score += 2
         
         if user_prefs["risk_tolerance"] == "Aggressive" and beta > 1:
@@ -79,10 +81,10 @@ for ticker in tickers[:50]:  # Limit API calls for testing
         elif user_prefs["risk_tolerance"] == "Conservative" and beta < 1:
             score += 1
         
-        if user_prefs["total_investment"] >= price:
+        if user_prefs["money_total"] >= price:  # Changed from "total_investment"
             score += 2
         
-        if user_prefs["goal"] == "Diversification" and dividend_yield > 0.02:
+        if user_prefs["goal"] == "Diversification of Income":  # Changed from "Diversification"
             score += 2
         
         # Select the best match
@@ -90,12 +92,12 @@ for ticker in tickers[:50]:  # Limit API calls for testing
             best_score = score
             selected_stock = ticker
 
-        time.sleep(1)  # Avoid rate limit
+        time.sleep(5)  # Avoid rate limit
     except Exception:
         continue
 
 print(f"Best stock recommendation: {selected_stock}")
 
-'''
+
 
 
