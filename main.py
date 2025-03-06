@@ -150,13 +150,14 @@ window.mainloop()
 # See PyCharm help at https://www.jetbrains.com/help/pycharm/
 '''
 
-
 import tkinter as tk
 from tkinter import ttk, messagebox
 import json
+import finance  # Import finance.py as a module
+
 
 def enter_data():
-    """Retrieve user inputs and save them to a JSON file."""
+    """Retrieve user inputs, save them to JSON, and run stock screener."""
     accepted = accept_var.get()
 
     if accepted == "Accepted":
@@ -172,19 +173,21 @@ def enter_data():
             "money_for_stock": float(shares_spinbox.get()),
             "sector": sector_combobox.get()
         }
-        
-        # Save user input to a JSON file
+
         with open("user_preferences.json", "w") as f:
             json.dump(user_data, f)
-        
-        messagebox.showinfo("Success", "Preferences Saved! Running Stock Screener...")
-        
-        import yfinance  # Import finance.py to process stocks
-    
+
+        recommended_stock = finance.run_stock_screener("user_preferences.json")
+
+        if recommended_stock:
+            messagebox.showinfo("Stock Recommendation", f"Best stock recommendation: {recommended_stock}")
+        else:
+            messagebox.showwarning("No Match", "No suitable stock found based on your preferences.")
     else:
         messagebox.showwarning("Error", "You haven't accepted the terms and conditions!")
 
-# GUI Setup
+
+# GUI Setup (unchanged from previous version)
 window = tk.Tk()
 window.title("Data Entry Form")
 
@@ -225,7 +228,8 @@ goal_combobox = ttk.Combobox(goal_frame, values=["Exponential Growth", "Beat Inf
 goal_combobox.grid(row=1, column=0, padx=10, pady=10)
 
 tk.Label(goal_frame, text="Time to Keep Stock").grid(row=0, column=1)
-time_combobox = ttk.Combobox(goal_frame, values=["Less than 1 year", "1 Year", "2 Years", "3+ Years", "Until % Growth Achieved"])
+time_combobox = ttk.Combobox(goal_frame,
+                             values=["Less than 1 year", "1 Year", "2 Years", "3+ Years", "Until % Growth Achieved"])
 time_combobox.grid(row=1, column=1, padx=10, pady=10)
 
 money_frame = tk.LabelFrame(frame, text="Money Questions")
@@ -243,17 +247,20 @@ sector_frame = tk.LabelFrame(frame, text="Stock Specific Questions")
 sector_frame.grid(row=4, column=0, padx=10, pady=10)
 
 tk.Label(sector_frame, text="Sector").grid(row=0, column=0)
-sector_combobox = ttk.Combobox(sector_frame, values=["No Clue", "Technology", "Financial Services", "Consumer Cyclical", "Healthcare", "Communication Services", "Industrials", "Consumer Defensive", "Energy", "Basic Materials", "Real Estate", "Utilities"])
+sector_combobox = ttk.Combobox(sector_frame,
+                               values=["No Clue", "Technology", "Financial Services", "Consumer Cyclical", "Healthcare",
+                                       "Communication Services", "Industrials", "Consumer Defensive", "Energy",
+                                       "Basic Materials", "Real Estate", "Utilities"])
 sector_combobox.grid(row=1, column=0, padx=10, pady=10)
 
 terms_frame = tk.LabelFrame(frame, text="Terms and Conditions")
 terms_frame.grid(row=5, column=0, padx=20, pady=20)
 
 accept_var = tk.StringVar(value="Not Accepted")
-terms_check = tk.Checkbutton(terms_frame, text="I accept the Terms and Conditions", variable=accept_var, onvalue="Accepted", offvalue="Not Accepted")
+terms_check = tk.Checkbutton(terms_frame, text="I accept the Terms and Conditions", variable=accept_var,
+                             onvalue="Accepted", offvalue="Not Accepted")
 terms_check.grid(row=0, column=0)
 
 tk.Button(frame, text="Enter Data", command=enter_data).grid(row=6, column=0, pady=10)
 
 window.mainloop()
-
